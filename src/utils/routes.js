@@ -57,6 +57,18 @@ export const routes = [
         component: lazy(()=> import('../pages/About')),
         layout: Layout
     },
+    {
+        path: '/login',
+        exact: true,
+        component: lazy(()=> import('../pages/Login')),
+        layout: Layout
+    },
+    {
+        path: '/register',
+        exact: true,
+        component: lazy(()=> import('../pages/Register')),
+        layout: Layout
+    }
 ]
 
 export default renderRoutes
