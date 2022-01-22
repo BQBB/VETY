@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import BlogCard from '../components/cards/BlogCard'
 import Container from '../components/Container'
 import Grid from '../components/Grid'
@@ -9,14 +10,16 @@ const Blogs = () => {
 
     return (
         <Container>
-            <Grid style='mt-10 gap-x-8 gap-y-4'>
+            <Grid style='mt-10 gap-8'>
 
                 {
                 (new Array(count).fill(0)).map((card,i)=>{
                     return (
-                        <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
-                            <BlogCard likes={50} dislikes={20} author='vety' title='الكلاب و التلفاز' category='الكلاب' excerpt='هل سبق لك أن لاحظت أن كلبك يهتم و يستمتع بمشاهدة التلفاز ؟ إذا كان الأمر كذلك ، فلا بد أنك تساءلت عما قد يفكرون فيه أثناء مشاهدة التلفاز' />
-                        </GridItem>
+                        <Link to='/blog'>
+                            <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
+                                <BlogCard likes={50} dislikes={20} author='vety' title='الكلاب و التلفاز' category='الكلاب' excerpt='هل سبق لك أن لاحظت أن كلبك يهتم و يستمتع بمشاهدة التلفاز ؟ إذا كان الأمر كذلك ، فلا بد أنك تساءلت عما قد يفكرون فيه أثناء مشاهدة التلفاز' />
+                            </GridItem>
+                        </Link>
                     )
                 })
                 }

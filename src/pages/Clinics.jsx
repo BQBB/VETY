@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import ClinicCard from '../components/cards/ClinicCard'
 import Container from '../components/Container'
 import Grid from '../components/Grid'
@@ -9,14 +10,16 @@ const Clinics = () => {
 
     return (
         <Container>
-            <Grid style='mt-10 gap-x-8 gap-y-4'>
+            <Grid style='mt-10 gap-8'>
 
                 {
                 (new Array(count).fill(0)).map((card,i)=>{
                     return (
-                        <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
-                            <ClinicCard name='عيادة ابن الهيثم البيطرية' location='بغداد - السيدية' bg='bg-vgray' />
-                        </GridItem>
+                        <Link to='/clinic'>
+                            <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
+                                <ClinicCard name='عيادة ابن الهيثم البيطرية' location='بغداد - السيدية' bg='bg-vgray' />
+                            </GridItem>
+                        </Link>
                     )
                 })
                 }

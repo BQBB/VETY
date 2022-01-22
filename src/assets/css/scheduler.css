@@ -1,0 +1,94 @@
+@import "../../../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../../../node_modules/@syncfusion/ej2-react-schedule/styles/material.css";
+
+.e-schedule-table td.e-work-cells,
+td.e-header-cells {
+    background-color: #ffffff!important;
+}
+
+.e-schedule-table td.e-work-cells:nth-child(1),
+.e-header-row td.e-header-cells:nth-child(1),
+.e-schedule-table td.e-work-cells:last-child,
+.e-header-row td.e-header-cells:last-child {
+    background-color: #fafafa!important;
+}
+
+.e-schedule-table td.e-work-cells:nth-child(4),
+.e-header-row td.e-header-cells:nth-child(4) {
+    background-color: #eff6ff!important;
+}
+
+.e-toolbar-right {
+    display: none!important;
+}
+
+.e-toolbar-left {
+    width: 100%!important;
+    display: flex!important;
+    justify-content: center!important;
+    align-items: center!important;
+    background-color: white!important;
+}
+
+.e-toolbar-left div,
+.e-toolbar-left button {
+    background-color: white!important;
+}
+
+.e-toolbar-left .e-next {
+    order: 5;
+}
+
+.e-schedule .e-schedule-toolbar {
+    box-shadow: none;
+}
+
+.e-time-slots {
+    height: 72px!important;
+}
+
+.e-time-cells.e-time-slots {
+    display: none;
+}
+
+.subject.e-field.e-input {
+    @apply focus:border-vblue !important;
+}
+
+.e-quick-popup-wrapper {
+    @apply rounded-md p-2 text-vblue !important;
+}
+
+.e-quick-popup-wrapper .e-cell-popup .e-popup-header .e-header-icon-wrapper {
+    @apply top-2 right-2 text-vred !important;
+}
+
+.e-quick-popup-wrapper .e-cell-popup .e-popup-header .e-header-icon-wrapper .e-edit, .e-quick-popup-wrapper .e-cell-popup .e-popup-header .e-header-icon-wrapper .e-delete, .e-quick-popup-wrapper .e-cell-popup .e-popup-header .e-header-icon-wrapper .e-close,
+.e-quick-popup-wrapper .e-event-popup .e-popup-header .e-header-icon-wrapper .e-edit-icon, .e-quick-popup-wrapper .e-event-popup .e-popup-header .e-header-icon-wrapper .e-delete-icon, .e-quick-popup-wrapper .e-event-popup .e-popup-header .e-header-icon-wrapper .e-close-icon {
+    @apply text-vred !important;
+}
+
+.e-event-header.e-popup-header {
+    @apply bg-white !important;
+}
+
+.e-schedule .e-content-wrap {
+    -ms-overflow-style: none!important; 
+    scrollbar-width: none!important;
+}
+
+.e-schedule .e-content-wrap::-webkit-scrollbar {
+    display: none!important;
+}
+
+.e-schedule {
+    border: none!important;
+}

@@ -3,6 +3,7 @@ import Container from '../components/Container';
 import login from '../assets/imgs/vlogin.svg'
 import Input from '../components/Input';
 import Grid from '../components/Grid';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
@@ -14,7 +15,7 @@ const Login = () => {
                         <Input for='email' type='text' label='البريد الألكتروني او رقم الهاتف' />
                         <Input for='email' type='password' label='كلمة المرور' />
                         <div className='flex justify-between items-center mt-4'>
-                            <p className='text-vblue text-sm'>انشاء حساب جديد</p>
+                            <Link to='/register' className='text-vblue text-sm'>انشاء حساب جديد</Link>
                             <button className="text-white bg-vblue px-4 md:px-8 py-2 rounded-lg hover:shadow-md text-vsm mt-4 ">تسجيل الدخول</button>
                         </div>
                     </form> 
