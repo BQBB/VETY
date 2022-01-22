@@ -1,3 +1,5 @@
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ClinicCard from '../components/cards/ClinicCard'
@@ -10,16 +12,21 @@ const Clinics = () => {
 
     return (
         <Container>
+            <div className='flex gap-x-4 items-center mt-14'>
+                <Link to='/' className='text-vblue text-lg sm:text-vmd'>الرئيسية</Link>
+                <FontAwesomeIcon icon={faChevronLeft} className='text-vblue' />
+                <p className='text-[#7c7c7c] text-lg sm:text-vmd'>العيادات</p>
+            </div>
             <Grid style='mt-10 gap-8'>
 
                 {
                 (new Array(count).fill(0)).map((card,i)=>{
                     return (
-                        <Link to='/clinic' key={i}>
-                            <GridItem style={`sm:col-span-6 md:col-span-4 `}>
-                                <ClinicCard name='عيادة ابن الهيثم البيطرية' location='بغداد - السيدية' bg='bg-vgray' />
+                            <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
+                                <Link to='/clinic' >
+                                    <ClinicCard name='عيادة ابن الهيثم البيطرية' location='بغداد - السيدية' bg='bg-vgray' />
+                                </Link>
                             </GridItem>
-                        </Link>
                     )
                 })
                 }

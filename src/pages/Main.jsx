@@ -89,11 +89,11 @@ const Main = () => {
                         {
                         (new Array(3).fill(0)).map((card,i)=>{
                             return (
-                                <Link to='/clinic' key={i}>
-                                    <GridItem style={`sm:col-span-6 md:col-span-4 `} >
-                                        <ClinicCard name='عيادة ابن الهيثم البيطرية' location='بغداد - السيدية' bg='bg-white' />
-                                    </GridItem>
-                                </Link>
+                                <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
+                                        <Link to='/clinic'>
+                                            <ClinicCard name='عيادة ابن الهيثم البيطرية' location='بغداد - السيدية' bg='bg-white' />
+                                        </Link>
+                                </GridItem>
                             )
                         })
                         }
@@ -112,11 +112,11 @@ const Main = () => {
                     {
                     (new Array(3).fill(0)).map((card,i)=>{
                         return (
-                            <Link to='/blog' key={i}>
-                                <GridItem style={`sm:col-span-6 md:col-span-4 `}>
-                                    <BlogCard likes={50} dislikes={20} author='vety' title='الكلاب و التلفاز' category='الكلاب' excerpt='هل سبق لك أن لاحظت أن كلبك يهتم و يستمتع بمشاهدة التلفاز ؟ إذا كان الأمر كذلك ، فلا بد أنك تساءلت عما قد يفكرون فيه أثناء مشاهدة التلفاز' />
-                                </GridItem>
-                            </Link>
+                            <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
+                                    <Link to='/blog' >
+                                        <BlogCard likes={50} dislikes={20} author='vety' title='الكلاب و التلفاز' category='الكلاب' excerpt='هل سبق لك أن لاحظت أن كلبك يهتم و يستمتع بمشاهدة التلفاز ؟ إذا كان الأمر كذلك ، فلا بد أنك تساءلت عما قد يفكرون فيه أثناء مشاهدة التلفاز' />
+                                    </Link>
+                            </GridItem>
                         )
                     })
                     }
