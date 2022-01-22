@@ -86,6 +86,12 @@ export const routes = [
         exact: true,
         component: lazy(()=> import('../pages/Pet')),
         layout: Layout
+    },
+    {
+        path: '/blog',
+        exact: true,
+        component: lazy(()=> import('../pages/Blog')),
+        layout: Layout
     }
 ]
 

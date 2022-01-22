@@ -15,8 +15,8 @@ const Clinics = () => {
                 {
                 (new Array(count).fill(0)).map((card,i)=>{
                     return (
-                        <Link to='/clinic'>
-                            <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
+                        <Link to='/clinic' key={i}>
+                            <GridItem style={`sm:col-span-6 md:col-span-4 `}>
                                 <ClinicCard name='عيادة ابن الهيثم البيطرية' location='بغداد - السيدية' bg='bg-vgray' />
                             </GridItem>
                         </Link>
