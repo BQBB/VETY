@@ -18,7 +18,7 @@ const Clinic = () => {
         <Grid style='mt-14'>
         <GridItem style='md:col-span-4 mb-10 flex flex-col items-center md:items-start'>
             <img src={profile} alt='profile img' className="w-40 h-40 sm:w-60 sm:h-60 mt-4 sm:mt-10 md:w-auto md:h-auto" />
-            <ul className="mt-4 sm:mt-10">
+            <ul className="mt-4 sm:mt-10 flex flex-col gap-y-2">
                 <p className="text-lg sm:text-vmd text-center md:text-right">العيادة البيطرية التخصصية</p>
                 <li className="flex items-center gap-x-4 mt-2  sm:mt-5">
                     <FontAwesomeIcon icon={faPhone} className="text-vblue fsicon" />

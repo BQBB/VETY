@@ -1,9 +1,8 @@
 import renderRoutes, { routes } from "./utils/routes";
-import Profile from "./pages/Profile";
-
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
-  return renderRoutes(routes)
+  return <AuthProvider>{renderRoutes(routes)}</AuthProvider>
 }
 
 export default App;

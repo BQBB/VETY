@@ -14,8 +14,8 @@ const Pet = () => {
         <Grid style='mt-14'>
         <GridItem style='md:col-span-4 mb-10 flex flex-col items-center md:items-start'>
             <img src='https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg' alt='profile img' className="rounded-full w-40 h-40 sm:w-60 sm:h-60 mt-4 sm:mt-10" />
-            <ul className="mt-4 sm:mt-10">
-                <p className="flex items-start gap-x-2 text-lg sm:text-vmd text-center md:text-right">Pappy<FontAwesomeIcon icon={faMars} className='text-vblue' /></p>
+            <ul className="mt-4 sm:mt-10 flex flex-col gap-y-2">
+                <p className="flex gap-x-2 text-lg sm:text-vmd justify-center sm:justify-start items-center">Pappy<FontAwesomeIcon icon={faMars} className='text-vblue' /></p>
                 <li className="flex items-center gap-x-4  mt-2  sm:mt-5">
                     <FontAwesomeIcon icon={faCertificate} className="text-vblue fsicon" />
                     <p className="text-vsm sm:text-lg">كلب</p>
