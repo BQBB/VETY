@@ -2,14 +2,18 @@ import React from 'react';
 import Container from '../components/Container';
 import Grid from '../components/Grid';
 import Input from '../components/Input';
-import register from '../assets/imgs/vregister.svg'
+import IMG from '../assets/imgs/vregister.svg'
+import AuthContext from '../context/AuthContext';
+import useAuth from '../hooks/useAuth'
 
 const Register = () => {
+    const { msg, register } = useAuth(AuthContext)
+
   return (
         <Container>
             <div className='mt-14'>
                 <Grid style='items-center gap-x-4'>
-                    <img src={register} alt='login img' className='col-span-12 mx-auto w-[20rem] h-[20rem] mb-4 sm:mb-0 sm:w-auto sm:h-auto sm:col-span-6' />
+                    <img src={IMG} alt='login img' className='col-span-12 mx-auto w-[20rem] h-[20rem] mb-4 sm:mb-0 sm:w-auto sm:h-auto sm:col-span-6' />
                     <form className='col-span-12 sm:col-span-6 bg-vgray p-5 rounded-md'>
                         <Input for='email' type='email' label='الاسم الأول' />
                         <Input for='email' type='email' label='الاسم الأخير' />
