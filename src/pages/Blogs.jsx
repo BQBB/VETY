@@ -1,41 +1,95 @@
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BlogCard from '../components/cards/BlogCard'
 import Container from '../components/Container'
+import Dropdown from '../components/Dropdown'
 import Grid from '../components/Grid'
 import GridItem from '../components/GridItem'
+import { BlogService } from '../services/BlogService'
 
 const Blogs = () => {
     const [count, setCount] = useState(6)
+    const [blogs, setBlogs] = useState([])
+    const [value, setValue] = useState({text: 'الكل'})
+    const [show, setShow] = useState(false)
+    const [types, setTypes] = useState([])
+    const [filterdBlogs, setFilterdBlogs] = useState([])
+
+
+    const handleMenu = (value) => {
+        if(value !='الكل') {
+            let filterd = blogs.filter((blog)=> (blog.type.name == value))
+            setFilterdBlogs(filterd)
+        } 
+        else {
+            setFilterdBlogs(blogs)
+        }
+
+        setValue({text: value})
+        setShow(!show)
+    }
+
+    useEffect(()=> {
+
+
+            ((new BlogService).all()).then(
+                res => {
+                    if(res.status != 200) {
+                       
+                        throw new Error('Error')
+                    }
+
+                    let newBlogs = [...res.data]
+                    let newTypes = []
+                    newBlogs.map((blog,i)=> {
+                        newTypes.push(blog.type.name)
+                    })
+                    setBlogs([...blogs, ...newBlogs])
+                    setFilterdBlogs([...filterdBlogs, ...newBlogs])
+                    setTypes([...types, ...newTypes])
+
+    
+                }
+            ).catch(err => null)
+    
+    },[])
+
 
     return (
         <Container>
             <div className='mt-14 flex justify-between items-center'>
-                <div className='flex gap-x-4 items-center'>
+                <div className='flex gap-x-4 items-start'>
                     <Link to='/' className='text-vblue text-lg sm:text-vmd'>الرئيسية</Link>
                     <FontAwesomeIcon icon={faChevronLeft} className='text-vblue' />
                     <p className='text-[#7c7c7c] text-lg sm:text-vmd'>المقالات</p>
                 </div>
-                <button className='rounded-md text-vblue text-vsm bg-vgray py-2 px-4'>الكل</button>
+                <div>
+                    {types.length? <Dropdown default='الكل' handleShow={()=> setShow(!show)} show={show} value={value.text} handleMenu={handleMenu} list={types} /> : null}
+                </div>
             </div>
-            <Grid style='mt-10 gap-8'>
+            {(filterdBlogs.length > 0)?
+
+                <Grid style='mt-10 gap-x-8 gap-y-4'>
 
                 {
-                (new Array(count).fill(0)).map((card,i)=>{
+                filterdBlogs.map((blog,i)=>{
                     return (
                         <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
-                                <Link to='/blog' >
-                                    <BlogCard likes={50} dislikes={20} author='vety' title='الكلاب و التلفاز' category='الكلاب' excerpt='هل سبق لك أن لاحظت أن كلبك يهتم و يستمتع بمشاهدة التلفاز ؟ إذا كان الأمر كذلك ، فلا بد أنك تساءلت عما قد يفكرون فيه أثناء مشاهدة التلفاز' />
+                                <Link to={`/blog/${blog.id}`} >
+                                    <BlogCard img={blog.image} likes={blog.like_count} dislikes={blog.dislike_count} author={blog.owner.first_name+" "+blog.owner.last_name} title={blog.title} category={blog.type.name} excerpt={blog.description.slice(0,136)} />
                                 </Link>
-                            </GridItem>
+                        </GridItem>
                     )
                 })
                 }
 
-            </Grid>
-            <button className="text-vblue bg-vgray table mx-auto px-4 py-2 rounded-lg hover:shadow-md mt-14" onClick={()=>setCount(count+3)}>عرض المزيد</button>
+                </Grid>
+                :
+                <p>لاتتوفر مقالات في الوقت الحالي</p>
+            }
+            {!(count > filterdBlogs.length) && <button className="text-vblue bg-vgray table mx-auto px-4 py-2 rounded-lg hover:shadow-md mt-14" onClick={()=>setCount(count+3)}>عرض المزيد</button>}
         </Container>
     )
 }

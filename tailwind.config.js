@@ -9,7 +9,8 @@ module.exports = {
       colors: {
         vblue: '#2A7699',
         vgray: '#F9F9F9',
-        vred: '#D65454'
+        vred: '#D65454',
+        vgreen: '#16a34a'
       },
 
       fontFamily: {

@@ -19,7 +19,7 @@ const Footer = () => {
                                 <ul className='text-vsm'>
                                     <li className='text-lg  md:text-vmd'>تواصل معنا</li>
                                     <li className='mt-2 flex items-center gap-x-2'><FontAwesomeIcon icon={faFacebookSquare} className='fsicon' /> VETY</li>
-                                    <li className='flex items-center gap-x-2'><FontAwesomeIcon icon={faInstagram} className='fsicon' /> vety.iq</li>
+                                    <a href='https://www.instagram.com/vety.iq' target='_blank' className='flex items-center gap-x-2'><FontAwesomeIcon icon={faInstagram} className='fsicon' /> vety.iq</a>
                                 </ul>
 
                                 <ul className='text-vsm'>

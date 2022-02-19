@@ -11,7 +11,7 @@ export class PetService extends Http {
         return await this.get('api/pet/all_type')
     }
 
-    async get(id) {
+    async getPet(id) {
         return await this.get('api/pet/one_pet?pet_id='+id)
     }
 
@@ -21,6 +21,23 @@ export class PetService extends Http {
 
     async delete(id) {
         return await this.delete('api/pet/delete_pet?pet_id='+id)
+    }
+
+
+    async create(formData) {
+
+    // {
+    //     type_id: id,
+    //     name: name,
+    //     gender: gender,
+    //     family: family,
+    //     weight: weight,
+    //     adopt_date: date,
+    //     age: age,
+    //     chip_num: chip_num,
+    //     image: img}
+
+        return await this.post('api/pet/create_pet_form', formData, `multipart/form-data; boundary=${formData._boundary}`)
     }
 
 }

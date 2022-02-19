@@ -2,6 +2,8 @@ import { Fragment, lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import LoadingScreen from "../components/LoadingScreen";
 import Layout from './Layout'
+import AuthGuard from './guards/AuthGuard'
+import GuessGuard from './guards/GuessGuard'
 
 const renderRoutes = (routes = []) => (
     <Suspense fallback={<LoadingScreen />}>
@@ -37,13 +39,15 @@ export const routes = [
         path: '/clinics',
         exact: true,
         component: lazy(()=> import('../pages/Clinics')),
-        layout: Layout
+        layout: Layout,
+        guard: AuthGuard
     },
     {
         path: '/blogs',
         exact: true,
         component: lazy(()=> import('../pages/Blogs')),
-        layout: Layout
+        layout: Layout,
+        guard: AuthGuard
     },
     {
         path: '/contact',
@@ -61,36 +65,48 @@ export const routes = [
         path: '/login',
         exact: true,
         component: lazy(()=> import('../pages/Login')),
-        layout: Layout
+        layout: Layout,
+        guard: GuessGuard
     },
     {
         path: '/register',
         exact: true,
         component: lazy(()=> import('../pages/Register')),
-        layout: Layout
+        layout: Layout,
+        guard: GuessGuard
     },
     {
         path: '/profile',
         exact: true,
         component: lazy(()=> import('../pages/Profile')),
-        layout: Layout
+        layout: Layout,
+        guard: AuthGuard
     },
     {
         path: '/clinic',
         exact: true,
         component: lazy(()=> import('../pages/Clinic')),
-        layout: Layout
+        layout: Layout,
+        guard: AuthGuard
     },
     {
         path: '/pet',
         exact: true,
         component: lazy(()=> import('../pages/Pet')),
-        layout: Layout
+        layout: Layout,
+        guard: AuthGuard
     },
     {
-        path: '/blog',
+        path: '/blog/:id',
         exact: true,
         component: lazy(()=> import('../pages/Blog')),
+        layout: Layout,
+        guard: AuthGuard
+    },
+    {
+        path: '/create/pet',
+        exact: true,
+        component: lazy(()=> import('../pages/CreatePet')),
         layout: Layout
     }
 ]

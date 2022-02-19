@@ -25,12 +25,12 @@ export class Http {
         }
     }
 
-    async post(url, body={}) {
+    async post(url, body={}, content=null) {
             try {
 
                 let response = await axiosInstance.post(url,body ,{
                     method: "POST",
-                    headers: this.headers
+                    headers: (content? {'Content-Type': content} : this.headers)
                 })
                 return response
             } catch (error) {
@@ -41,7 +41,7 @@ export class Http {
 
         }
 
-    async put(url, body) {
+    async put(url, body={}) {
         try {
             let response = await fetch(url, {
                 method: "PUT",

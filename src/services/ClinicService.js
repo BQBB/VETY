@@ -7,7 +7,7 @@ export class ClinicService extends Http {
         return await this.get('api/clinic/all_clinics')
     }
 
-    async get(id) {
+    async getClinic(id) {
         return await this.get('api/clinic/one_clinics?id='+id)
     }
 

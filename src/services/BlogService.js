@@ -7,8 +7,8 @@ export class BlogService extends Http {
         return await this.get('api/blog/all_blog')
     }
 
-    async get(id) {
-        return await this.get('api/blog/one_blog?id='+id)
+    async getBlog(id) {
+        return await this.get('api/blog/one_blog?blog_id='+id)
     }
 
     async delete(id) {

@@ -2,10 +2,12 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFeather } from '@fortawesome/free-solid-svg-icons'
 import { Icon } from '@iconify/react';
+import { BASE_URL } from '../../utils/constants';
 
 const BlogCard = (props) => {
+    let img = BASE_URL+props.img.slice(1,props.img.length)
     return (
-        <div className='relative bg-[url("https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg")] h-80 bg-cover bg-blend-darken rounded-md overflow-hidden'>
+        <div style={{backgroundImage: `url("${img}")`}} className={`relative h-80 bg-cover bg-blend-darken rounded-md overflow-hidden`}>
             <div className='z-0 absolute bg-black h-full w-full opacity-50'></div>
             <div className='absolute h-full  z-10 w-full top-2 px-2'>
                 <div className='flex justify-between items-center'>
@@ -23,11 +25,11 @@ const BlogCard = (props) => {
                         <div className='flex justify-end items-center gap-x-2'>
                             <div className='flex items-center gap-x-2'>
                                 <p className='text-vsm md:text-lg'>{props.dislikes}</p>
-                                <Icon icon="bx:bx-dislike" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
+                                <Icon icon="bx:bx-dislike" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-6 md:w-6" />
                             </div>
                             <div className='flex items-center gap-x-2'>
                                 <p className='text-vsm md:text-lg'>{props.likes}</p>
-                                <Icon icon="bx:bx-like" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
+                                <Icon icon="bx:bx-like" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-6 md:w-6" />
                             </div>
                         </div>
                     </div>

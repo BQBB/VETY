@@ -3,10 +3,15 @@ import { Redirect } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 const GuessGuard = (props) => {
-    const { isAuthed } = useAuth()
+    const { isAuthed, path } = useAuth()
 
     if(isAuthed) {
-        return <Redirect to='/profile' />
+        if(path == '/login' || path == '/register')
+        {
+          return <Redirect to={'/profile'} />
+        }
+        return <Redirect to={path} />
+
     }
   return <>{props.children}</>;
 };

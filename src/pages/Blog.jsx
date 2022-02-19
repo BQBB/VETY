@@ -1,32 +1,84 @@
-import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faFeather } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Icon } from '@iconify/react';
-import React from 'react';
-import Container from '../components/Container';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { BlogService } from '../services/BlogService';
+import { BASE_URL } from '../utils/constants';
+import AlertMsg from '../components/AlertMsg'
 
 const Blog = () => {
+    const [blog, setBlog] = useState({})
+    const { id } = useParams()
+    const [date, setDate] = useState('')
+    const [likeIcon, setLikeIcon] = useState('bx:like')
+    const [disLikeIcon, setDisLikeIcon] = useState('bx:dislike')
+    const [msg, setMsg] = useState(null)
+
+    const handleLike = ()=> {
+        (new BlogService).like(id).then(res=> {
+            if(res.status != 201) {
+                throw new Error('error')
+            }
+            setLikeIcon("bxs:like")
+            setDisLikeIcon("bx:dislike")
+            setMsg(null)
+        }).catch(error => setMsg('حدث خطأ'))
+    }
+
+    const handleDislike = ()=> {
+        (new BlogService).dislike(id).then(res=> {
+            if(res.status != 201) {
+                throw new Error('error')
+            }
+            setDisLikeIcon("bxs:dislike")
+            setLikeIcon("bx:like")
+            setMsg(null)
+        }).catch(error => setMsg('حدث خطأ'))
+    }
+
+    useEffect(()=>{
+        console.log();
+        (new BlogService).getBlog(id).then(res => {
+            if(!res || res.detail && res.detail.length > 0 || res.status != 200) {
+                throw new Error('error')
+            }
+
+            let d = new Date(res.data.created)
+            if(res.data.is_like) {
+                setLikeIcon("bxs:like")
+            }
+            else if(res.data.is_dislike) {
+                setDisLikeIcon("bxs:dislike")
+            }
+
+            setDate(`${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`)
+            setBlog({...res.data})
+        })
+        .catch(err => null)
+    },[])
+
   return (
-      <Container>
-            <div className='mt-14 relative bg-[url("https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg")] h-[50vh] md:h-screen bg-cover bg-blend-darken rounded-md overflow-hidden'>
+      <div className='mx-auto p-12 sm:p-24'>
+            {Object.keys(blog).length? (<><div style={{backgroundImage: `url("${BASE_URL+blog.image.slice(1,blog.image.length)}")`}} className='mt-14 relative h-[50vh] md:h-screen bg-cover bg-blend-darken rounded-md overflow-hidden'>
                 <div className='z-0 absolute bg-black h-full w-full opacity-50'></div>
                 <div className='absolute h-full  z-10 w-full top-2 px-2'>
-                <span className='absolute z-20 left-5 top-5 bg-vblue rounded-md text-white text-lg md:text-vmd py-1 px-4'>كلاب</span>
+                <span className='absolute z-20 left-5 top-5 bg-vblue rounded-md text-white text-lg md:text-vmd py-1 px-4'>{blog.type.name}</span>
                         <div className=' mx-auto text-white flex flex-col justify-end h-[90%] w-[90%]'>
                             <div className='flex flex-col gap-y-2'>
-                                <h4 className='text-vmd sm:text-vlg'>الكلاب و التلفاز</h4>
+                                <h4 className='text-vmd sm:text-vlg'>{blog.title}</h4>
                                 <div className='flex justify-between items-center'>
                                     <div className='flex flex-col items-center'>
                                         <div className='flex items-center justify-center gap-x-1'>
                                             <FontAwesomeIcon icon={faFeather} className='text-white' />
-                                            <p className='text-white text-vsm sm:text-lg'>VETY</p>
+                                            <p className='text-white text-vsm sm:text-lg'>{(blog.owner.first_name+" "+blog.owner.last_name).trim()}</p>
                                         </div>
-                                        <span className='text-white text-vsm sm:text-lg py-1 px-4'>1/1/2020</span>
+                                        <span className='text-white text-vsm sm:text-lg py-1 px-4'>{date}</span>
                                     </div>
-                                    <div className='flex gap-x-1'>
-                                        <Icon icon="feather:facebook" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
-                                        <Icon icon="feather:instagram" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
-                                    </div>
+                                    {blog.owner.clinic && <div className='flex gap-x-1'>
+                                        {blog.owner.clinic.facebook && <a href={blog.owner.clinic.facebook}><Icon icon="feather:facebook" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" /></a>}
+                                        {blog.owner.clinic.instagram &&<a href={blog.owner.clinic.instagram}><Icon icon="feather:instagram" color="#ffffff" className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" /></a>}
+                                    </div>}
                                 </div>
                             </div>
                             <hr className='w-full h-[2px] bg-white my-4' />
@@ -36,44 +88,18 @@ const Blog = () => {
             
             </div>
 
-            <div className='mt-10 text-sm leading-9 sm:text-[18px]'>
-                                هل سبق لك أن لاحظت أن كلبك يهتم و يستمتع بمشاهدة التلفاز ؟ إذا كان الأمر كذلك ، فلا بد أنك تساءلت عما قد يفكرون فيه أثناء مشاهدة التلفاز، و هل يرون نفس الأشياء التي نشاهدها نحن و
-                    بنفس الطريقة التي نراها, و هل يفهمون ما يشاهدونهُ ؟ الجواب على سؤالك هو : نعم , الكلاب في الواقع تلاحظ وتفهم الصور التي يشاهدونها على شاشة التلفزيون ، وكذلك الأصوات المصاحبة لها.
-                    تنجذب الكلاب إلى التلفزيون في البداية بسبب بعض الأصوات التي تسمعها ثم يبدءون في التركيز على الصور و أن أكثر الأصوات التي تثير أستجابة الكلاب هي نباح الكلاب الأخرى بالدرجة الأولى ، صوت الإنسان
-                    الذي يعطي مدحاً لكلبهِ أو أوامر ودية وأصوات ألعاب الصرير تتمكن الكلاب من التعرف على صور الكلاب الأخرى المعروضة على شاشة التلفاز من بين صور البشر و الحيوانات الأخرى حيث تتمكن من حفظ صور
-                    الكلاب و تميزها إلى أنواعها الخاصة بسهولة أكبر من صور أي شيء آخر و هذا يفسر تفاعل الكلاب عندما ترى كلباً أو تسمع نباحاً على التلفزيون من البرامج الأخرى التي تحفز الكلاب هي البرامج الرياضية أو أي
-                    رياضة تحتوي على كرة بشكل خاص و برامج الأكشن بسبب الحركة و المؤثرات الخاصة المصاحبة لهذه البرامج و في بعض الأحيان الرسوم المتحركة. ميكانيكة عمل العين لدى الكلاب : Vergence أو الرؤية
-                    المجهرية: تكيف تطوري لعيون بعض انواع الثديات و الكلاب يسمح للعين بالتحرك في اتجاهات متزامنة و تتبع الأجسام المتحركة و التركيز عليها بسهوله أكثر, علماً أن هذه الميزة مفقودة في عيون البشر
-                    إذاً كيف تعمل العين و كيف يعالجون الصور التي يرونها ؟ تتم معالجة الصور التي تلتقطها العين من التلفاز كل على حدى أي عند عرض صوره أو مقطع عن قرب فيتم تعزيز التقارب البصري,أما عند عرض صور أو
-                    مقاطع عن بعد فيتم تعزيز الأختلاف أو الأنحراف البصري, كما و تعمل كلتا العينين معاً في حالة تُعرف باسم التثبيت حيث تلتقي صورتان مختلفتان معاً لخلق إحساس بالعمق ، والذي يتم تعزيزهُ عن طريق
-                    التداخل ثنائي العينين. فإن الكلاب و أثناء مشاهدتها للتلفاز تدرك أن الأشياء التي تراها ليست موجودة معهم بالواقع إنما هي على بعدٍ آخر و مستوى آخر كما أنهم أيضاً يملكون قدرة عالية على متابعة و
-                    تتبع الأجسام المتحركة البعيدة أعلى منها في تتبع الأجسام الثابتة و القريبة منهم. نظراً لأن الكلاب يمكنها معالجة المعلومات المرئية بشكل أسرع من البشر ، فإن ما يرونه يختلف تماماً عما نراهُ, حتى
-                    أن هناك قناة خاصة بالكلاب على HDTV تسمى DogTV تحتوي القناة على إطارات في الثانية أكثر من التلفزيون العادي وهذه القناة ملونة خصيصاً لنظر الكلاب . بسبب الإختلاف التشريحي و الفسلجي لتركيب عين
-                    البشر عن عين الكلاب, فأن الكلاب تكون أكثر حساسية لحركة الأضواء المنخفضة على عكس البشر التي تكون اكثر حساسة للاضواء الساطعة. و هناك الكثير من المربين يتركون التلفاز مفتوحاً لحيواناتهم الايفه
-                    عندمى يكونون خاج المنزل على أمل أَلا يشعر حيوانهم بالملل أثناء خروجهم.هل سبق لك أن لاحظت أن كلبك يهتم و يستمتع بمشاهدة التلفاز ؟ إذا كان الأمر كذلك ، فلا بد أنك تساءلت عما قد يفكرون فيه أثناء مشاهدة التلفاز، و هل يرون نفس الأشياء التي نشاهدها نحن و
-                    بنفس الطريقة التي نراها, و هل يفهمون ما يشاهدونهُ ؟ الجواب على سؤالك هو : نعم , الكلاب في الواقع تلاحظ وتفهم الصور التي يشاهدونها على شاشة التلفزيون ، وكذلك الأصوات المصاحبة لها.
-                    تنجذب الكلاب إلى التلفزيون في البداية بسبب بعض الأصوات التي تسمعها ثم يبدءون في التركيز على الصور و أن أكثر الأصوات التي تثير أستجابة الكلاب هي نباح الكلاب الأخرى بالدرجة الأولى ، صوت الإنسان
-                    الذي يعطي مدحاً لكلبهِ أو أوامر ودية وأصوات ألعاب الصرير تتمكن الكلاب من التعرف على صور الكلاب الأخرى المعروضة على شاشة التلفاز من بين صور البشر و الحيوانات الأخرى حيث تتمكن من حفظ صور
-                    الكلاب و تميزها إلى أنواعها الخاصة بسهولة أكبر من صور أي شيء آخر و هذا يفسر تفاعل الكلاب عندما ترى كلباً أو تسمع نباحاً على التلفزيون من البرامج الأخرى التي تحفز الكلاب هي البرامج الرياضية أو أي
-                    رياضة تحتوي على كرة بشكل خاص و برامج الأكشن بسبب الحركة و المؤثرات الخاصة المصاحبة لهذه البرامج و في بعض الأحيان الرسوم المتحركة. ميكانيكة عمل العين لدى الكلاب : Vergence أو الرؤية
-                    المجهرية: تكيف تطوري لعيون بعض انواع الثديات و الكلاب يسمح للعين بالتحرك في اتجاهات متزامنة و تتبع الأجسام المتحركة و التركيز عليها بسهوله أكثر, علماً أن هذه الميزة مفقودة في عيون البشر
-                    إذاً كيف تعمل العين و كيف يعالجون الصور التي يرونها ؟ تتم معالجة الصور التي تلتقطها العين من التلفاز كل على حدى أي عند عرض صوره أو مقطع عن قرب فيتم تعزيز التقارب البصري,أما عند عرض صور أو
-                    مقاطع عن بعد فيتم تعزيز الأختلاف أو الأنحراف البصري, كما و تعمل كلتا العينين معاً في حالة تُعرف باسم التثبيت حيث تلتقي صورتان مختلفتان معاً لخلق إحساس بالعمق ، والذي يتم تعزيزهُ عن طريق
-                    التداخل ثنائي العينين. فإن الكلاب و أثناء مشاهدتها للتلفاز تدرك أن الأشياء التي تراها ليست موجودة معهم بالواقع إنما هي على بعدٍ آخر و مستوى آخر كما أنهم أيضاً يملكون قدرة عالية على متابعة و
-                    تتبع الأجسام المتحركة البعيدة أعلى منها في تتبع الأجسام الثابتة و القريبة منهم. نظراً لأن الكلاب يمكنها معالجة المعلومات المرئية بشكل أسرع من البشر ، فإن ما يرونه يختلف تماماً عما نراهُ, حتى
-                    أن هناك قناة خاصة بالكلاب على HDTV تسمى DogTV تحتوي القناة على إطارات في الثانية أكثر من التلفزيون العادي وهذه القناة ملونة خصيصاً لنظر الكلاب . بسبب الإختلاف التشريحي و الفسلجي لتركيب عين
-                    البشر عن عين الكلاب, فأن الكلاب تكون أكثر حساسية لحركة الأضواء المنخفضة على عكس البشر التي تكون اكثر حساسة للاضواء الساطعة. و هناك الكثير من المربين يتركون التلفاز مفتوحاً لحيواناتهم الايفه
-                    عندمى يكونون خاج المنزل على أمل أَلا يشعر حيوانهم بالملل أثناء خروجهم.
-            </div>
+            <div className='mt-10 text-sm leading-10 sm:text-[18px]'>{blog.description}</div>
 
             <div className='flex gap-x-4 text-vblue mt-4'>
                 <p className=' text-lg sm:text-vmd'>هل استفدت من الموضوع ؟</p>
                 <div className='flex justify-end items-center gap-x-2'>
-                    <Icon icon="bx:bx-like"  className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
-                    <Icon icon="bx:bx-dislike" className="mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
+                    <Icon onClick={handleLike} icon={likeIcon}  className="cursor-pointer mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
+                    <Icon onClick={handleDislike} icon={disLikeIcon} className="cursor-pointer mx-auto md:mx-0 h-5 w-5 md:h-7 md:w-7" />
                 </div>
             </div>
-      </Container>
+            {msg && <AlertMsg msg={msg} category='vred' />}
+            </>) : <p>المقالة التي تبحث عنها غير متوفرة</p>}
+      </div>
   );
 };
 
