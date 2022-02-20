@@ -57,7 +57,7 @@ export class Http {
 
     async delete(url) {
         try {
-            let response = await fetch(url, {
+            let response = await axiosInstance.delete(url, {
                 method: "DELETE",
                 headers: this.headers
             })

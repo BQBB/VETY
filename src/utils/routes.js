@@ -83,14 +83,14 @@ export const routes = [
         guard: AuthGuard
     },
     {
-        path: '/clinic',
+        path: '/clinic/:id',
         exact: true,
         component: lazy(()=> import('../pages/Clinic')),
         layout: Layout,
         guard: AuthGuard
     },
     {
-        path: '/pet',
+        path: '/pet/:id',
         exact: true,
         component: lazy(()=> import('../pages/Pet')),
         layout: Layout,
@@ -100,6 +100,20 @@ export const routes = [
         path: '/blog/:id',
         exact: true,
         component: lazy(()=> import('../pages/Blog')),
+        layout: Layout,
+        guard: AuthGuard
+    },
+    {
+        path: '/vaccine/pet/:id',
+        exact: true,
+        component: lazy(()=> import('../pages/Vaccine')),
+        layout: Layout,
+        guard: AuthGuard
+    },
+    {
+        path: '/report/pet/:id',
+        exact: true,
+        component: lazy(()=> import('../pages/Reports')),
         layout: Layout,
         guard: AuthGuard
     },

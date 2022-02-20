@@ -2,26 +2,16 @@ import { ScheduleComponent, Week, Inject, ViewsDirective, ViewDirective } from '
 import { useRef } from 'react';
 import '../assets/css/scheduler.css'
 
-const Scheduler = ()=> {
+const Scheduler = (props)=> {
     let scheduleObj = useRef({});
-    let data = [
-      {
-        Id: 1,
-        Subject: 'Paris',
-        StartTime: new Date(2022, 0, 21, 10, 0),
-        EndTime: new Date(2022, 0, 21, 11, 0),
-        IsAllDay: false
-    }, {
-        Id: 2,
-        Subject: 'London',
-        StartTime: new Date(2022, 0, 16, 12, 0),
-        EndTime: new Date(2022, 0, 16, 13, 0),
-        IsAllDay: false
-    }
-    ];
+    let data = props.data
   
 
     const onPopup = (args) => {
+
+      if(!props.canAdd) {
+        return args.cancel = true
+      }
 
       if(args.type==='Editor') {
           return args.cancel = true
@@ -42,7 +32,7 @@ const Scheduler = ()=> {
           const eventData = scheduleObj.eventWindow.getObjectFromFormData("e-quick-popup-wrapper");
           const addObj = {};
           addObj.Id = scheduleObj.getEventMaxID();
-          addObj.Subject = eventData.Subject.length > 0 ? eventData.Subject : "Add title";
+          addObj.Subject = "";
           addObj.StartTime = new Date(+cellDetails.startTime.setMinutes(0))
           addObj.EndTime = new Date(+cellDetails.startTime.setMinutes(60))
           addObj.Location = eventData.Location;

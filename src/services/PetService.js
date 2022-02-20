@@ -19,7 +19,7 @@ export class PetService extends Http {
         return await this.post('api/pet/post_clinic_pet?id='+ petId +'&clinic_id='+clinicId)
     }
 
-    async delete(id) {
+    async deletePet(id) {
         return await this.delete('api/pet/delete_pet?pet_id='+id)
     }
 
@@ -38,6 +38,14 @@ export class PetService extends Http {
     //     image: img}
 
         return await this.post('api/pet/create_pet_form', formData, `multipart/form-data; boundary=${formData._boundary}`)
+    }
+
+    async getVaccines(id) {
+        return await this.get('api/vaccine/all_pet_vaccine?pet_id='+id)
+    }
+
+    async getReports(id) {
+        return await this.get('api/report/all_pet_report?pet_id='+id)
     }
 
 }
