@@ -30,7 +30,7 @@ const Modal = (props) => {
             </button>
             <br class="clear-both" />
           </div>
-          <div className='scoll-bar__modal'>
+          <div className='scoll-bar__modal overflow-auto max-h-[500px]'>
             {props.children}
           </div>
         </div>

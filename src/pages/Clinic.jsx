@@ -19,14 +19,28 @@ import Loader from '../components/Loader';
 import Modal from '../components/Modal';
 import PetCard from '../components/cards/PetCard';
 import { BASE_URL } from '../utils/constants';
+import useSnack from '../hooks/useSnack';
 
 const Clinic = (props) => {
     const [clinic, setClinic] = useState({})
     const [showModal, setShowModal] = useState(false)
     const [pets, setPets] = useState([])
-    const [pet, setPet] = useState('')
     const [load ,setLoad] = useState(true)
     const { id } = useParams()
+    const { error, success } = useSnack()
+    const [appointments, setAppointments] = useState([])
+    const [date, setDate] = useState({})
+    const [hours, setHours] = useState({})
+    
+    const handleAddToClinic = (pet)=> {
+      (new PetService).addToClinic(pet,id).then(res => {
+          if(!res || res.status !=201) {
+            throw new Error('err')
+          }
+          success('تم اضافة حيوانك الاليف الى العيادة')
+          setShowModal(false)
+      }).catch(err=> error('حدثت مشكلة ما'))
+    }
 
     const handleRedirect = (path) => {
         props.history.push(path)
@@ -39,6 +53,26 @@ const Clinic = (props) => {
             }
 
             setClinic({...res.data})
+            let appoints = [];
+            res.data.appointment.map((appoint) => {
+            appoints.push({
+              Id: appoint.id,
+              Subject: appoint.clinic.clinic_name,
+              StartTime: new Date(appoint.start_date.split(":")[0] + ":00:00"),
+              EndTime: new Date(appoint.end_date.split(":")[0] + ":00:00"),
+              IsAllDay: false,
+            });
+        });
+
+        let _sdate = new Date(`2022-02-20T${res.data.start_date}`)
+        let _edate = new Date(`2022-02-20T${res.data.end_date}`)
+        setDate({start: !(_sdate.getHours() > 12) ? _sdate.getHours()+" صباحا" : (_sdate.getHours() % 12)+" مساءا",
+          end: !(_edate.getHours() > 12) ? _edate.getHours()+" صباحا" : (_edate.getHours() % 12)+" مساءا"
+        })
+
+        setHours({start: _sdate.getHours().toString()+":00", end: _edate.getHours().toString()+":00"})
+        setAppointments([...appoints]);
+
         }).catch(err => handleRedirect('/clinics'));
 
         (new PetService).all().then(res => {
@@ -90,7 +124,7 @@ const Clinic = (props) => {
                 icon={faBusinessTime}
                 className="text-vblue fsicon"
               />
-              <p className="text-vsm sm:text-lg">9 صباحا - 5 مساءا</p>
+              <p className="text-vsm sm:text-lg">{date.start+" - "+date.end}</p>
             </li>
             <li className="flex items-center gap-x-4">
               <FontAwesomeIcon
@@ -127,21 +161,19 @@ const Clinic = (props) => {
           </div>
         </GridItem>
         <GridItem style="md:col-span-8">
-          <Scheduler />
+          <Scheduler canAdd data={appointments} startHour={hours.start} endHour={hours.end} />
 
           <Grid style="gap-4 mt-10">
-            <GridItem style="sm:col-span-6">
-              <DoctorCard name="هيثم الشمري" phone="07729999999" />
-            </GridItem>
-            <GridItem style="sm:col-span-6">
-              <DoctorCard name="هيثم الشمري" phone="07729999999" />
-            </GridItem>
-            <GridItem style="sm:col-span-6">
-              <DoctorCard name="هيثم الشمري" phone="07729999999" />
-            </GridItem>
-            <GridItem style="sm:col-span-6">
-              <DoctorCard name="هيثم الشمري" phone="07729999999" />
-            </GridItem>
+            {clinic.doctor.length ? 
+              clinic.doctor.map((doc,i)=> {
+                return (
+                  <GridItem key={i} style="sm:col-span-6">
+                    <DoctorCard name={doc.name} phone={doc.phone_number} />
+                  </GridItem>
+                )
+              })
+            : null
+            }
           </Grid>
         </GridItem>
       </Grid> : null}
@@ -152,7 +184,7 @@ const Clinic = (props) => {
                   {pets.map((pet,i)=>{
                       return (
                         <GridItem key={i} style="sm:col-span-6">
-                          <button className='w-full' onClick={()=> setPet(pet.id)}>
+                          <button className='w-full' onClick={()=> handleAddToClinic(pet.id)}>
                             <PetCard name={pet.name} type={pet.type.name} img={BASE_URL+pet.image.slice(1,pet.image.length)} />
                           </button>
                         </GridItem>

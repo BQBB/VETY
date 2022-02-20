@@ -105,7 +105,7 @@ const Scheduler = (props)=> {
       <ScheduleComponent ref={(schedule) => (scheduleObj = schedule)} width='100%' height='550px' eventSettings={{ dataSource: data}} allowDragAndDrop={false} allowResizing={false} popupOpen={onPopup} quickInfoTemplates={{header: header,content:content, footer: footer}}>
        
         <ViewsDirective>
-          <ViewDirective option='Week' startHour='07:00' endHour='18:00'/>
+          <ViewDirective option='Week' startHour={props.startHour || '07:00'} endHour={props.endHour || '18:00'}/>
         </ViewsDirective>
 
         

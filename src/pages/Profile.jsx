@@ -128,14 +128,14 @@ const Profile = () => {
                       })
                     : null}
 
-                  <div className="flex flex-col items-center cursor-pointer">
+                  <Link to={'/pets'} className="flex flex-col items-center cursor-pointer">
                     <div className="flex justify-evenly items-center rounded-full bg-vblue h-20 w-20 md:h-28 md:w-28 hover:opacity-75 ">
                       <div className="rounded-full h-2 w-2 bg-white"></div>
                       <div className="rounded-full h-2 w-2 bg-white"></div>
                       <div className="rounded-full h-2 w-2 bg-white"></div>
                     </div>
                     <p className="text-vsm sm:text-lg mt-1">المزيد</p>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </GridItem>

@@ -4,11 +4,14 @@ import './assets/css/tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { SnackProvider } from './context/SnackContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <SnackProvider>
+        <App />
+      </SnackProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

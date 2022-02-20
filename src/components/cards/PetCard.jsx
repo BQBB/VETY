@@ -5,8 +5,8 @@ import React from 'react'
 const PetCard = (props) => {
   return (
         <div className='bg-vgray p-4 rounded-md items-center'>
-            <img src={props.img} alt='profile img' className="w-full h-20 sm:h-24" />
-            <ul  className="items-center mt-4 sm:mt-10 flex flex-col gap-y-2">
+            <img src={props.img} alt='profile img' className="rounded-md w-full h-full sm:h-20 md:h-24" />
+            <ul  className="items-center mt-4 flex flex-col">
                 <p className="flex gap-x-2 text-lg sm:text-vmd justify-center sm:justify-start items-center">
                         {props.name}
                     {props.gender == "male" ? (
@@ -15,7 +15,7 @@ const PetCard = (props) => {
                             <FontAwesomeIcon icon={faVenus} className="text-vblue" />
                             )}
                 </p>
-                <li className="flex items-center gap-x-4  mt-2  sm:mt-5">
+                <li className="flex items-center gap-x-2  mt-2">
                     <FontAwesomeIcon
                       icon={faCertificate}
                       className="text-vblue fsicon"

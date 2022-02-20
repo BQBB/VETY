@@ -7,36 +7,49 @@ import { BlogService } from '../services/BlogService';
 import { BASE_URL } from '../utils/constants';
 import AlertMsg from '../components/AlertMsg'
 import Loader from '../components/Loader'
+import useSnack from '../hooks/useSnack';
 
 const Blog = (props) => {
     const [blog, setBlog] = useState({})
+    const { error, success} = useSnack()
     const { id } = useParams()
     const [date, setDate] = useState('')
     const [likeIcon, setLikeIcon] = useState('bx:like')
     const [disLikeIcon, setDisLikeIcon] = useState('bx:dislike')
-    const [msg, setMsg] = useState(null)
     const [load ,setLoad] = useState(true)
 
     const handleLike = ()=> {
+        let _like = likeIcon;
+        let _dislike = disLikeIcon;
+        setLikeIcon("bxs:like");
+        setDisLikeIcon("bx:dislike");
         (new BlogService).like(id).then(res=> {
             if(res.status != 201) {
                 throw new Error('error')
             }
-            setLikeIcon("bxs:like")
-            setDisLikeIcon("bx:dislike")
-            setMsg(null)
-        }).catch(error => setMsg('حدث خطأ'))
+            success('تم الاعجاب')
+        }).catch(err => {
+          error('حدثت مشكلة ما')
+          setDisLikeIcon(_dislike)
+          setLikeIcon(_like)
+        })
     }
 
     const handleDislike = ()=> {
+        let _like = likeIcon;
+        let _dislike = disLikeIcon;
+        setDisLikeIcon("bxs:dislike");
+        setLikeIcon("bx:like");
         (new BlogService).dislike(id).then(res=> {
             if(res.status != 201) {
                 throw new Error('error')
             }
-            setDisLikeIcon("bxs:dislike")
-            setLikeIcon("bx:like")
-            setMsg(null)
-        }).catch(error => setMsg('حدث خطأ'))
+            success('تم الغاء الاعجاب')
+        }).catch(err => {
+          error('حدثت مشكلة ما')
+          setDisLikeIcon(_dislike)
+          setLikeIcon(_like)
+        })
     }
     
     const handleRedirect = (path) => {
@@ -156,7 +169,6 @@ const Blog = (props) => {
                   />
                 </div>
               </div>
-              {msg && <AlertMsg msg={msg} category="vred" />}
             </>
           ) : (
             <p>المقالة التي تبحث عنها غير متوفرة</p>

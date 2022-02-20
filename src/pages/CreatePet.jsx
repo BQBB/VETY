@@ -9,6 +9,7 @@ import { PetService } from "../services/PetService";
 import AlertMsg from '../components/AlertMsg'
 import FormData from 'form-data'
 import {Redirect} from 'react-router-dom'
+import useSnack from "../hooks/useSnack";
 
 const CreatePet = (props) => {
   const [types, setTypes] = useState([]);
@@ -23,6 +24,7 @@ const CreatePet = (props) => {
   const [chip, setChip] = useState('')
   const [date, setDate] = useState('')
   const [errors, setErrors] = useState({})
+  const { error, success} = useSnack()
 
   const handleMenu = (value) => {
     setValue({text: value})
@@ -131,7 +133,10 @@ const CreatePet = (props) => {
     for (var key of data.entries()) {
       console.log(key[0] + ', ' + key[1]);
     }
-    (new PetService).create(data).then(res => handleRedirect('/profile')).catch(err => console.log(err))
+    (new PetService).create(data).then(res => {
+      success('تم اضافة حيوانك الاليف الى المنصة')
+      handleRedirect('/profile')
+    }).catch(err => error('حدثت مشكلة ما'))
 
   }
 

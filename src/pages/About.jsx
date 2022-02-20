@@ -8,7 +8,7 @@ import dog from '../assets/imgs/dog.png'
 const About = () => {
   return (
     <Container>
-      <h2 className="text-vblue text-lg sm:text-vmd md:text-vlg text-center mt-14">
+        <h2 className="text-vblue text-lg sm:text-vmd md:text-vlg text-center mt-14">
         من نحن
       </h2>
       <div className="mt-10">

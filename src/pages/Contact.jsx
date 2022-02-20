@@ -5,6 +5,7 @@ import contact from '../assets/imgs/vcontact.svg'
 import Input from '../components/Input'
 import AlertMsg from '../components/AlertMsg'
 import {Http} from '../utils/http'
+import useSnack from '../hooks/useSnack'
 
 const Contact = () => {
   const [fname, setFname] = useState("");
@@ -12,7 +13,7 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [question, setQuestion] = useState("");
   const [errors, setErrors] = useState({});
-  const [msg, setMsg] = useState({});
+  const { error, success} = useSnack()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,10 +56,10 @@ const Contact = () => {
         if (!res || (res.detail && res.detail.length > 0)) {
           throw new Error("Error");
         }
-        setMsg({ text: "تم ارسال سؤالك بنجاح", category: "green-600" });
+        success('تم ارسال سؤالك بنجاح')
       })
       .catch((err) =>
-        setMsg({ text: "حدثت مشكلة اثناء ارسال الرسالة", category: "vred" })
+        error('حدثت مشكلة ما')
       );
   };
 
@@ -111,7 +112,6 @@ const Contact = () => {
                 <AlertMsg msg={errors.question} category="vred" />
               )}
             </div>
-            {msg.text && <AlertMsg msg={msg.text} category={msg.category} />}
             <button className="text-white bg-vblue px-4 md:px-8 py-2 rounded-lg hover:shadow-md text-vsm mt-4 table mr-auto">
               ارسال
             </button>
