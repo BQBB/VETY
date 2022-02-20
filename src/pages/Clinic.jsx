@@ -13,10 +13,19 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as rStar} from '@fortawesome/free-regular-svg-icons'
 import { Redirect } from 'react-router-dom';
 import { ClinicService } from '../services/ClinicService'
+import { PetService } from '../services/PetService'
 import { useParams } from 'react-router-dom';
+import Loader from '../components/Loader';
+import Modal from '../components/Modal';
+import PetCard from '../components/cards/PetCard';
+import { BASE_URL } from '../utils/constants';
 
 const Clinic = (props) => {
     const [clinic, setClinic] = useState({})
+    const [showModal, setShowModal] = useState(false)
+    const [pets, setPets] = useState([])
+    const [pet, setPet] = useState('')
+    const [load ,setLoad] = useState(true)
     const { id } = useParams()
 
     const handleRedirect = (path) => {
@@ -30,13 +39,24 @@ const Clinic = (props) => {
             }
 
             setClinic({...res.data})
-        })
-        .catch(err => handleRedirect('/clinics'))
+        }).catch(err => handleRedirect('/clinics'));
+
+        (new PetService).all().then(res => {
+          if(!res || res.detail && res.detail.length > 0 || res.status != 200) {
+              throw new Error('error')
+          }
+
+          setPets([...res.data])
+          setLoad(false)
+      })
+      .catch(err => setLoad(false))
     },[])
 
   return (
     <Container>
-      {Object.keys(clinic).length ?<Grid style="mt-14">
+      {load? <Loader />: (
+        <>
+          {Object.keys(clinic).length ?<Grid style="mt-14">
         <GridItem style="md:col-span-4 mb-10 flex flex-col items-center md:items-start">
           <img
             src={profile}
@@ -89,7 +109,7 @@ const Clinic = (props) => {
           </ul>
 
           <div className="mt-10 flex flex-col items-center">
-            <button className="bg-vgray flex gap-x-2 rounded-md shadow-sm hover:shadow-md py-2 px-4">
+            <button onClick={()=> setShowModal(true)} className="bg-vgray flex gap-x-2 rounded-md shadow-sm hover:shadow-md py-2 px-4">
               <img className="fsicon" src={paws} alt="paws" />
               اضافة حيوان اليف
             </button>
@@ -125,6 +145,24 @@ const Clinic = (props) => {
           </Grid>
         </GridItem>
       </Grid> : null}
+
+      <Modal show={showModal} handleClose={()=> setShowModal(false)}>
+              {pets.length ? 
+                <Grid style="gap-4 mt-10 p-2">
+                  {pets.map((pet,i)=>{
+                      return (
+                        <GridItem key={i} style="sm:col-span-6">
+                          <button className='w-full' onClick={()=> setPet(pet.id)}>
+                            <PetCard name={pet.name} type={pet.type.name} img={BASE_URL+pet.image.slice(1,pet.image.length)} />
+                          </button>
+                        </GridItem>
+                      )
+                  })}
+                </Grid>
+              : null}
+      </Modal>
+        </>
+      )}
     </Container>
   );
 };

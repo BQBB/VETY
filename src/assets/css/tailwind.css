@@ -21,3 +21,12 @@
 .fsicon {
     @apply w-5 h-5 !important
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+  
+.scroll-bar__modal {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
