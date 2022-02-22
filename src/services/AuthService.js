@@ -24,4 +24,17 @@ export class AuthService extends Http {
     async me() {
         return await this.get('api/auth/me')
     }
+
+    async updateProfile(firstName, lastName, address, gender) {
+        return await this.put('api/auth/update_account',{
+            "user": {
+              "first_name": firstName,
+              "last_name": lastName,
+              "address": address
+            },
+            "member": {
+              "gender": gender
+            }
+          })
+    }
 }

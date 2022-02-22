@@ -40,6 +40,22 @@ export class PetService extends Http {
         return await this.post('api/pet/create_pet_form', formData, `multipart/form-data; boundary=${formData._boundary}`)
     }
 
+    async update(formData) {
+
+        // {
+        //     type_id: id,
+        //     name: name,
+        //     gender: gender,
+        //     family: family,
+        //     weight: weight,
+        //     adopt_date: date,
+        //     age: age,
+        //     chip_num: chip_num,
+        //     image: img}
+    
+            return await this.post('api/pet/update_pet_form', formData, `multipart/form-data; boundary=${formData._boundary}`)
+        }
+
     async getVaccines(id) {
         return await this.get('api/vaccine/all_pet_vaccine?pet_id='+id)
     }

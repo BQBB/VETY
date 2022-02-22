@@ -105,6 +105,7 @@ const Pet = (props) => {
                     />
                     <p className="text-vsm sm:text-lg">{pet.chip_num}</p>
                   </li>
+                  <Link to={`/edit/pet/${pet.id}`} className='text-center text-vblue bg-vgray py-1 px-4 w-full rounded-md hover:shadow-md text-vsm sm:text-lg'>تعديل</Link>
                 </ul>
 
                 <div className="mt-10 flex flex-col items-center">

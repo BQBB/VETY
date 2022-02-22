@@ -18,7 +18,7 @@ const Footer = () => {
                         <div className='grow flex w-full sm:w-auto justify-evenly space-x-4 mb-4 sm:mb-0'>
                                 <ul className='text-vsm'>
                                     <li className='text-lg  md:text-vmd'>تواصل معنا</li>
-                                    <li className='mt-2 flex items-center gap-x-2'><FontAwesomeIcon icon={faFacebookSquare} className='fsicon' /> VETY</li>
+                                    <a href='https://www.facebook.com/vety.iq' target='_blank' className='mt-2 flex items-center gap-x-2'><FontAwesomeIcon icon={faFacebookSquare} className='fsicon' /> VETY</a>
                                     <a href='https://www.instagram.com/vety.iq' target='_blank' className='flex items-center gap-x-2'><FontAwesomeIcon icon={faInstagram} className='fsicon' /> vety.iq</a>
                                 </ul>
 

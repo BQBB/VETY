@@ -1,11 +1,12 @@
 import { ScheduleComponent, Week, Inject, ViewsDirective, ViewDirective } from '@syncfusion/ej2-react-schedule';
 import { useRef } from 'react';
 import '../assets/css/scheduler.css'
+import useSnack from '../hooks/useSnack';
 
 const Scheduler = (props)=> {
     let scheduleObj = useRef({});
     let data = props.data
-  
+    const { error, success } = useSnack()
 
     const onPopup = (args) => {
 
@@ -41,7 +42,16 @@ const Scheduler = (props)=> {
       switch (action) {
           case "add":
               eventData = getSlotData();
-              scheduleObj.addEvent(eventData);
+              let _date = new Date(eventData.StartTime);
+              _date = `${_date.getFullYear()}-${_date.getMonth()+1}-${_date.getDate()} ${_date.getHours()}:00:00`;
+               props.handleAppointments(_date).then(res => {
+                if(!res || res.status !=201) {
+                  throw new Error('err')
+                }
+                success('تم حجز موعد')
+                scheduleObj.addEvent(eventData);
+                props.addAppointments([...data,eventData])
+            }).catch(err=> error('حدثت مشكلة ما'))
               break;
           case "edit":
           case "edit-series":

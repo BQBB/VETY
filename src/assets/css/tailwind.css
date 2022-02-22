@@ -30,3 +30,8 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}

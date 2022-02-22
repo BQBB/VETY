@@ -56,6 +56,7 @@ const Pets = () => {
                         <PetCard
                             name={pet.name}
                             img={BASE_URL+pet.image.slice(1,pet.image.length)}
+                            type={pet.type.name}
                         />
                       </Link>
                     </GridItem>

@@ -125,6 +125,20 @@ export const routes = [
         guard: AuthGuard
     },
     {
+        path: '/edit/pet/:id',
+        exact: true,
+        component: lazy(()=> import('../pages/EditPet')),
+        layout: Layout,
+        guard: AuthGuard
+    },
+    {
+        path: '/edit/profile',
+        exact: true,
+        component: lazy(()=> import('../pages/EditProfile')),
+        layout: Layout,
+        guard: AuthGuard
+    },
+    {
         path: '/create/pet',
         exact: true,
         component: lazy(()=> import('../pages/CreatePet')),

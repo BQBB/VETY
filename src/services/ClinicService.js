@@ -22,4 +22,11 @@ export class ClinicService extends Http {
     async deleteRate(id) {
         return await this.delete('api/clinic_rating/delete_clinic_rate?clinic_id='+id)
     }
+
+    async appoint(date, clinic) {
+        return await this.post('api/appointment/create_appointment', {
+                "start_date": date,
+                "clinic": clinic
+        })
+    }
 }

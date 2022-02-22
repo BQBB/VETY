@@ -43,10 +43,9 @@ export class Http {
 
     async put(url, body={}) {
         try {
-            let response = await fetch(url, {
+            let response = await axiosInstance.put(url,body, {
                 method: "PUT",
                 headers: this.headers,
-                body: JSON.stringify(body)
             })
            
             return response

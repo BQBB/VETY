@@ -21,13 +21,18 @@ const Blog = (props) => {
     const handleLike = ()=> {
         let _like = likeIcon;
         let _dislike = disLikeIcon;
-        setLikeIcon("bxs:like");
+        if (_like == 'bxs:like') {
+          setLikeIcon("bx:like");
+        } else {
+          setLikeIcon("bxs:like");
+        }
+        
         setDisLikeIcon("bx:dislike");
         (new BlogService).like(id).then(res=> {
             if(res.status != 201) {
                 throw new Error('error')
             }
-            success('تم الاعجاب')
+            success('تم')
         }).catch(err => {
           error('حدثت مشكلة ما')
           setDisLikeIcon(_dislike)
@@ -38,13 +43,17 @@ const Blog = (props) => {
     const handleDislike = ()=> {
         let _like = likeIcon;
         let _dislike = disLikeIcon;
-        setDisLikeIcon("bxs:dislike");
+        if (_dislike == 'bx:dislike') {
+          setDisLikeIcon("bxs:dislike");
+        } else {
+          setDisLikeIcon("bx:dislike");
+        }
         setLikeIcon("bx:like");
         (new BlogService).dislike(id).then(res=> {
             if(res.status != 201) {
                 throw new Error('error')
             }
-            success('تم الغاء الاعجاب')
+            success('تم')
         }).catch(err => {
           error('حدثت مشكلة ما')
           setDisLikeIcon(_dislike)

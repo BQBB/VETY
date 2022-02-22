@@ -20,6 +20,7 @@ import Modal from '../components/Modal';
 import PetCard from '../components/cards/PetCard';
 import { BASE_URL } from '../utils/constants';
 import useSnack from '../hooks/useSnack';
+import Rate from '../components/Rate';
 
 const Clinic = (props) => {
     const [clinic, setClinic] = useState({})
@@ -31,7 +32,22 @@ const Clinic = (props) => {
     const [appointments, setAppointments] = useState([])
     const [date, setDate] = useState({})
     const [hours, setHours] = useState({})
-    
+    const [ratingCount, setRatingCount] = useState(0)
+
+    async function addAppointment(_date) { 
+      return await (new ClinicService).appoint(_date, id)
+    }
+        
+    const handleRate = (point) => {
+      (new ClinicService).rate(point,id).then(res => {
+        if(!res || res.status !=201) {
+          throw new Error('err')
+        }
+        success('تم تقييم العيادة')
+        setRatingCount(point)
+    }).catch(err=> error('حدثت مشكلة ما'))
+    }
+
     const handleAddToClinic = (pet)=> {
       (new PetService).addToClinic(pet,id).then(res => {
           if(!res || res.status !=201) {
@@ -53,11 +69,12 @@ const Clinic = (props) => {
             }
 
             setClinic({...res.data})
+            setRatingCount(res.data.user_rating)
             let appoints = [];
             res.data.appointment.map((appoint) => {
             appoints.push({
               Id: appoint.id,
-              Subject: appoint.clinic.clinic_name,
+              Subject: appoint.member.user.first_name,
               StartTime: new Date(appoint.start_date.split(":")[0] + ":00:00"),
               EndTime: new Date(appoint.end_date.split(":")[0] + ":00:00"),
               IsAllDay: false,
@@ -99,7 +116,7 @@ const Clinic = (props) => {
           />
           <ul className="mt-4 sm:mt-10 flex flex-col gap-y-2">
             <p className="text-lg sm:text-vmd text-center md:text-right">
-              {clinic.name}
+              {clinic.clinic_name}
             </p>
             {clinic.user.phone_number.length ? <li className="flex items-center gap-x-4 mt-2  sm:mt-5">
               <FontAwesomeIcon icon={faPhone} className="text-vblue fsicon" />
@@ -126,42 +143,32 @@ const Clinic = (props) => {
               />
               <p className="text-vsm sm:text-lg">{date.start+" - "+date.end}</p>
             </li>
-            <li className="flex items-center gap-x-4">
+           {clinic.facebook?.length ?  <li className="flex items-center gap-x-4">
               <FontAwesomeIcon
                 icon={faFacebookSquare}
                 className="text-vblue fsicon"
               />
-              <p className="text-vsm sm:text-lg">VETY</p>
-            </li>
-            <li className="flex items-center gap-x-4">
+              <a href={clinic.facebook} target="_blank" className="text-vsm sm:text-lg">{clinic.facebook.match(/\.com\/(\w+)/)[1]}</a>
+            </li> : null}
+            {clinic.instagram?.length ? <li className="flex items-center gap-x-4">
               <FontAwesomeIcon
                 icon={faInstagram}
                 className="text-vblue fsicon"
               />
-              <p className="text-vsm sm:text-lg">vety.iq</p>
-            </li>
+              <a href={clinic.instagram} target="_blank" className="text-vsm sm:text-lg">{clinic.instagram.match(/\.com\/(\w+)/)[1]}</a>
+            </li> : null}
           </ul>
 
           <div className="mt-10 flex flex-col items-center">
-            <button onClick={()=> setShowModal(true)} className="bg-vgray flex gap-x-2 rounded-md shadow-sm hover:shadow-md py-2 px-4">
+            <button onClick={()=> setShowModal(true)} className="mb-2 bg-vgray flex gap-x-2 rounded-md shadow-sm hover:shadow-md py-2 px-4">
               <img className="fsicon" src={paws} alt="paws" />
               اضافة حيوان اليف
             </button>
-            <div className="flex gap-x-1 mt-1">
-              {new Array(5).fill(0).map((n, i) => {
-                return (
-                  <FontAwesomeIcon
-                    key={i}
-                    icon={i == 0 ? rStar : faStar}
-                    className="faicon text-yellow-300"
-                  />
-                );
-              })}
-            </div>
+            <Rate handleClick={(i)=> handleRate(i)} count={ratingCount} />
           </div>
         </GridItem>
         <GridItem style="md:col-span-8">
-          <Scheduler canAdd data={appointments} startHour={hours.start} endHour={hours.end} />
+          <Scheduler canAdd data={appointments} startHour={hours.start} endHour={hours.end} handleAppointments={addAppointment}  addAppointments={setAppointments} />
 
           <Grid style="gap-4 mt-10">
             {clinic.doctor.length ? 

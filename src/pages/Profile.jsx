@@ -10,11 +10,13 @@ import { Link } from 'react-router-dom';
 import {AuthService} from '../services/AuthService'
 import { BASE_URL } from '../utils/constants';
 import Loader from '../components/Loader';
+import useAuth from '../hooks/useAuth'
 
 const Profile = () => {
     const [user, setUser] = useState({})
     const [appointments, setAppointments] = useState([])
     const [load ,setLoad] = useState(true)
+    const { logout } = useAuth()
 
   useEffect(() => {
     new AuthService()
@@ -98,7 +100,15 @@ const Profile = () => {
                     />
                     <p className="text-vsm sm:text-lg">{user.member.gender}</p>
                   </li>
+                  
                 ) : null}
+                <Link to={`/edit/profile`} className='text-center text-vblue bg-vgray py-1 px-4 w-full rounded-md hover:shadow-md text-vsm sm:text-lg'>تعديل</Link>
+                <button
+                    className="bg-vred text-white flex gap-x-2 rounded-md shadow-sm hover:shadow-md py-2 px-4 sm:px-8"
+                    onClick={logout}
+                  >
+                    تسجيل الخروج
+                  </button>
               </ul>
             </GridItem>
             <GridItem style="md:col-span-8">
