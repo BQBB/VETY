@@ -142,6 +142,13 @@ export const routes = [
         path: '/create/pet',
         exact: true,
         component: lazy(()=> import('../pages/CreatePet')),
+        layout: Layout,
+        guard: AuthGuard
+    },
+    {
+        path: '/*',
+        exact: true,
+        component: lazy(()=> import('../pages/NotFound')),
         layout: Layout
     }
 ]
