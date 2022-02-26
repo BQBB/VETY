@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../components/Container';
 import IMG from '../assets/imgs/vlogin.svg'
 import Input from '../components/Input';
@@ -46,6 +46,10 @@ const Login = () => {
         login(user,pass)
     }
 
+    useEffect(() => {
+      setMsg('')
+    }, [])
+    
   return (
     <Container>
       <div className="mt-14">

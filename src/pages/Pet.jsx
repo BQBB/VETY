@@ -34,7 +34,7 @@ const Pet = (props) => {
             ) {
               throw new Error("err");
             }
-            handleRedirect("/");
+            handleRedirect("/pets");
           })
           .catch((err) => null);
     }
@@ -69,7 +69,7 @@ const Pet = (props) => {
                 <ul className="mt-4 sm:mt-10 flex flex-col gap-y-2">
                   <p className="flex gap-x-2 text-lg sm:text-vmd justify-center sm:justify-start items-center">
                     {pet.name}
-                    {pet.gender == "male" ? (
+                    {(pet.gender == "male") ? (
                       <FontAwesomeIcon icon={faMars} className="text-vblue" />
                     ) : (
                       <FontAwesomeIcon icon={faVenus} className="text-vblue" />

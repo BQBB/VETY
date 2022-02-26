@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../components/Container';
 import Grid from '../components/Grid';
 import Input from '../components/Input';
@@ -54,6 +54,10 @@ const Register = () => {
 
       register(fname, lname, email, pass, phone);
     };
+
+    useEffect(() => {
+      setMsg('')
+    }, [])
 
   return (
     <Container>

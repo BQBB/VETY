@@ -25,7 +25,7 @@ const EditProfile = (props) => {
 
   const handleSubmit = (e)=> {
     e.preventDefault();
-    (new AuthService).updateProfile(user.first_name, user.last_name, address, gender).then(res=>{
+    (new AuthService).updateProfile(user.first_name, user.last_name, address, (typeof(gender) == 'object' ? gender.value : gender)).then(res=>{
       if (res.status != 200) {
         throw new Error("err");
       }
@@ -44,7 +44,7 @@ const EditProfile = (props) => {
 
         setUser({ ...res.data })
         setGender((res.data.member.gender == 'male')? {title: 'ذكر', value:'male'} : {title: 'انثى', value:'female'})
-        setAddress(res.data.address.id)
+        setAddress(res.data.address?.id)
       })
       .catch((err) => handleRedirect('/profile'));
 
@@ -74,7 +74,7 @@ const EditProfile = (props) => {
           </div>
 
          
-          <Options options={[{title: 'ذكر', value:'male'},{title: 'انثى', value:'female'}]} for='gender' name='الجنس' value={gender} handleOptions={(e) => setGender(e.target.value)} />
+          <Options options={[{title: 'ذكر', value:'male'},{title: 'انثى', value:'female'}]} for='gender' name='الجنس' value={gender.value} handleOptions={(e) => setGender(e.target.value)} />
           <Options options={addresses} for='address' name='العنوان' value={address} handleOptions={(e) => setAddress(e.target.value)} />
 
 

@@ -20,7 +20,7 @@ const EditPet = (props) => {
   const [value, setValue] = useState({text: 'الكل'})
   const [selectedImage, setSelectedImage] = useState(null);
   const [name, setName] = useState('')
-  const [gender, setGender] = useState('')
+  const [gender, setGender] = useState()
   const [type, setType] = useState('')
   const [age, setAge] = useState('')
   const [weight, setSWeight] = useState('')
@@ -117,7 +117,7 @@ const EditPet = (props) => {
     data.append("type_id", value.text)
     data.append("name", name)
     data.append("pet_id", id)
-    data.append("gender", gender)
+    data.append("gender", typeof(gender) == 'object' ? gender.value : gender)
     data.append("family", type)
     data.append("weight", weight)
     data.append("adopt_date", date)
@@ -148,7 +148,7 @@ const EditPet = (props) => {
 
       let _types = res.data.map((type)=> { return {title: type.name, value: type.id} })
       setTypes([..._types])
-      setValue({text: res.data[0].name})
+      setValue({text: res.data[0].id})
       
     }).catch(err => null);
 
@@ -158,7 +158,7 @@ const EditPet = (props) => {
         }
         let pet = res.data
         setName(pet.name)
-        setGender(pet.gender)
+        setGender((pet.gender== 'male')? {title: 'ذكر', value:'male'} : {title: 'انثى', value:'female'})
         setAge(pet.age)
         setType(pet.family)
         setSWeight(pet.weight)
@@ -223,7 +223,7 @@ const EditPet = (props) => {
               </div>
 
               <div>
-                <Options options={[{title: 'ذكر', value:'male'},{title: 'انثى', value:'female'}]} for='gender' name='الجنس' value={gender} handleOptions={(e) => setGender(e.target.value)} />
+                <Options options={[{title: 'ذكر', value:'male'},{title: 'انثى', value:'female'}]} for='gender' name='الجنس' value={gender.value} handleOptions={(e) => setGender(e.target.value)} />
                 {errors.gender ? (
                   <AlertMsg category={"vred"} msg={errors.gender} />
                 ) : null}

@@ -10,6 +10,7 @@ import AlertMsg from '../components/AlertMsg'
 import FormData from 'form-data'
 import {Redirect} from 'react-router-dom'
 import useSnack from "../hooks/useSnack";
+import Options from "../components/Options";
 
 const CreatePet = (props) => {
   const [types, setTypes] = useState([]);
@@ -17,7 +18,7 @@ const CreatePet = (props) => {
   const [show, setShow] = useState(false)
   const [selectedImage, setSelectedImage] = useState();
   const [name, setName] = useState('')
-  const [gender, setGender] = useState('')
+  const [gender, setGender] = useState({title: 'ذكر', value:'male'})
   const [type, setType] = useState('')
   const [age, setAge] = useState('')
   const [weight, setSWeight] = useState('')
@@ -120,9 +121,9 @@ const CreatePet = (props) => {
 
     let data = new FormData()
 
-    data.append("type_id", types.find((type)=> type.name == value.text).id)
+    data.append("type_id", value.text)
     data.append("name", name)
-    data.append("gender", gender)
+    data.append("gender", typeof(gender) == 'object' ? gender.value : gender)
     data.append("family", type)
     data.append("weight", weight)
     data.append("adopt_date", date)
@@ -149,8 +150,10 @@ const CreatePet = (props) => {
       if(!res.data.length) {
         throw new Error('err')
       }
-      setTypes([...res.data])
-      setValue({text: res.data[0].name})
+
+      let _types = res.data.map((type)=> { return {title: type.name, value: type.id} })
+      setTypes([..._types])
+      setValue({text: res.data[0].id})
       
     }).catch(err => null)
   } ,[])
@@ -201,13 +204,7 @@ const CreatePet = (props) => {
               </div>
 
               <div>
-                <Input
-                  for="gender"
-                  type="text"
-                  label="الجنس"
-                  value={gender}
-                  onType={(e) => setGender(e.target.value)}
-                />
+              <Options options={[{title: 'ذكر', value:'male'},{title: 'انثى', value:'female'}]} for='gender' name='الجنس' value={gender} handleOptions={(e) => setGender(e.target.value)} />
                 {errors.gender ? (
                   <AlertMsg category={"vred"} msg={errors.gender} />
                 ) : null}
@@ -264,7 +261,9 @@ const CreatePet = (props) => {
                   <AlertMsg category={"vred"} msg={errors.age} />
                 ) : null}
               </div>
-
+              {types.length ? (
+              <Options options={types} for='typ' name='النوع' value={value.text} handleOptions={(e) => setValue({text: e.target.value})} />
+            ) : null}
               <div>
                 <Input
                   for="chip_number"
@@ -278,7 +277,7 @@ const CreatePet = (props) => {
                 ) : null}
               </div>
             </div>
-            <label className="relative mt-4">النوع</label>
+            {/* <label className="relative mt-4">النوع</label>
             {types.length ? (
               <Dropdown
                 default={types[0].name}
@@ -291,7 +290,7 @@ const CreatePet = (props) => {
                 handleMenu={handleMenu}
                 list={types.slice(1, types.length).map((type) => type.name)}
               />
-            ) : null}
+            ) : null} */}
 
             <div className="flex justify-between items-center mt-4">
               <button className=" transition text-white bg-vblue px-4 md:px-8 py-2 rounded-lg hover:shadow-md text-vsm mt-4 hover:bg-blue-900 ">
