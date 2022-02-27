@@ -78,7 +78,7 @@ const Scheduler = (props)=> {
                 success('تم حجز موعد')
                 scheduleObj.addEvent(eventData);
                 props.addAppointments([...data,eventData])
-            }).catch(err=> error('حدثت مشكلة ما'))
+            }).catch(err=> error('تاكد من سجل حجوزاتك'))
               break;
           case "edit":
           case "edit-series":
