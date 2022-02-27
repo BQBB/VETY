@@ -47,9 +47,9 @@ const Blogs = () => {
                     newBlogs.map((blog,i)=> {
                         newTypes.push(blog.type.name)
                     })
-                    setBlogs([...blogs, ...(Array.from(new Set(newBlogs)))])
+                    setBlogs([...blogs, ...newBlogs])
                     setFilterdBlogs([...filterdBlogs, ...newBlogs])
-                    setTypes([...types, ...newTypes])
+                    setTypes([...types, ...(Array.from(new Set(newTypes)))])
                     setLoad(false)
     
                 }
