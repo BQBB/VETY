@@ -931,14 +931,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   row-gap: 0.5rem;
 }
 
-.gap-x-8 {
-  -webkit-column-gap: 2rem;
-          column-gap: 2rem;
-}
-
 .gap-x-20 {
   -webkit-column-gap: 5rem;
           column-gap: 5rem;
+}
+
+.gap-x-8 {
+  -webkit-column-gap: 2rem;
+          column-gap: 2rem;
 }
 
 .gap-y-5 {
@@ -1522,6 +1522,16 @@ select {
 
   .sm\:gap-5 {
     gap: 1.25rem;
+  }
+
+  .sm\:gap-x-8 {
+    -webkit-column-gap: 2rem;
+            column-gap: 2rem;
+  }
+
+  .sm\:gap-x-4 {
+    -webkit-column-gap: 1rem;
+            column-gap: 1rem;
   }
 
   .sm\:p-24 {

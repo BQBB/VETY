@@ -170,7 +170,7 @@ const Clinic = (props) => {
         <GridItem style="md:col-span-8">
           <Scheduler canAdd data={appointments} startHour={hours.start} endHour={hours.end} handleAppointments={addAppointment}  addAppointments={setAppointments} />
 
-          <Grid style="gap-4 mt-10">
+          <Grid style="sm:gap-x-4 gap-y-4 mt-10">
             {clinic.doctor.length ? 
               clinic.doctor.map((doc,i)=> {
                 return (
@@ -187,7 +187,7 @@ const Clinic = (props) => {
 
       <Modal show={showModal} handleClose={()=> setShowModal(false)}>
               {pets.length ? 
-                <Grid style="gap-4 mt-10 p-2">
+                <Grid style="sm:gap-x-4 gap-y-4 mt-10 p-2">
                   {pets.map((pet,i)=>{
                       return (
                         <GridItem key={i} style="sm:col-span-6">

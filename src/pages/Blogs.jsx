@@ -47,7 +47,7 @@ const Blogs = () => {
                     newBlogs.map((blog,i)=> {
                         newTypes.push(blog.type.name)
                     })
-                    setBlogs([...blogs, ...newBlogs])
+                    setBlogs([...blogs, ...(Array.from(new Set(newBlogs)))])
                     setFilterdBlogs([...filterdBlogs, ...newBlogs])
                     setTypes([...types, ...newTypes])
                     setLoad(false)
@@ -65,7 +65,7 @@ const Blogs = () => {
         ) : (
           <>
             <div className="mt-14 flex justify-between items-center">
-              <div className="flex gap-x-4 items-start">
+              <div className="flex gap-x-4 items-center">
                 <Link to="/" className="text-vblue text-lg sm:text-vmd">
                   الرئيسية
                 </Link>
@@ -86,7 +86,7 @@ const Blogs = () => {
               </div>
             </div>
             {filterdBlogs.length > 0 ? (
-              <Grid style="mt-10 gap-x-8 gap-y-4">
+              <Grid style="mt-10 sm:gap-x-8 gap-y-4">
                 {filterdBlogs.map((blog, i) => {
                   return (
                     <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
@@ -110,7 +110,7 @@ const Blogs = () => {
             ) : (
               <p>لاتتوفر مقالات في الوقت الحالي</p>
             )}
-            {!(count > filterdBlogs.length) && (
+            {!(count >= filterdBlogs.length) && (
               <button
                 className="text-vblue bg-vgray table mx-auto px-4 py-2 rounded-lg hover:shadow-md mt-14"
                 onClick={() => setCount(count + 3)}

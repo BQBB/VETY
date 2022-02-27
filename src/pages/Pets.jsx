@@ -48,7 +48,7 @@ const Pets = () => {
               <Link to={'/create/pet'} className='bg-vgray rounded-md p-2 text-vblue'>اضافة حيوان اليف</Link>
             </div>
             {pets.length > 0 ? (
-              <Grid style="mt-10 gap-x-8 gap-y-4">
+              <Grid style="mt-10 sm:gap-x-8 gap-y-4">
                 {pets.map((pet, i) => {
                   return (
                     <GridItem key={i} style="sm:col-span-6 md:col-span-4">

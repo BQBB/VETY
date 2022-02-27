@@ -113,7 +113,7 @@ const Main = (props) => {
               <h2 className="text-vblue text-center text-vmd md:text-vlg mt-14">
                 خدماتنا
               </h2>
-              <Grid style="mt-10 gap-x-8 gap-y-4">
+              <Grid style="mt-10 sm:gap-x-8 gap-y-4">
                 {services.map((card, i) => {
                   return (
                     <GridItem
@@ -151,7 +151,7 @@ const Main = (props) => {
                   </Link>
                 </div>
                 {clinics.length > 0 ? (
-                  <Grid style="mt-10 gap-x-8 gap-y-4">
+                  <Grid style="mt-10 sm:gap-x-8 gap-y-4">
                     {clinics.map((clinic, i) => {
                       return (
                         <GridItem
@@ -193,7 +193,7 @@ const Main = (props) => {
                 </Link>
               </div>
               {blogs.length > 0 ? (
-                <Grid style="mt-10 gap-x-8 gap-y-4">
+                <Grid style="mt-10 sm:gap-x-8 gap-y-4">
                   {blogs.map((blog, i) => {
                     return (
                       <GridItem style={`sm:col-span-6 md:col-span-4 `} key={i}>
