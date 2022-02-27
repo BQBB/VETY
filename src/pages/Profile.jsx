@@ -31,7 +31,7 @@ const Profile = () => {
         res.data.member.appointment.map((appoint) => {
           appoints.push({
             Id: appoint.id,
-            Subject: appoint.clinic.clinic_name,
+            Subject: (appoint.clinic.clinic_name).trim(),
             StartTime: new Date(appoint.start_date.split(":")[0] + ":00:00"),
             EndTime: new Date(appoint.end_date.split(":")[0] + ":00:00"),
             IsAllDay: false,

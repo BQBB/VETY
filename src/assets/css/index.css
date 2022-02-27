@@ -638,16 +638,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: auto;
 }
 
+.mr-auto {
+  margin-right: auto;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
 
 .mb-2 {
   margin-bottom: 0.5rem;
-}
-
-.mr-auto {
-  margin-right: auto;
 }
 
 .mt-6 {
@@ -1159,13 +1159,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.75rem;
 }
 
-.text-vmd {
-  font-size: 1.438rem;
-}
-
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
+}
+
+.text-vmd {
+  font-size: 1.438rem;
 }
 
 .text-5xl {
@@ -1226,6 +1226,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(253 224 71 / var(--tw-text-opacity));
 }
 
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -1244,11 +1249,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-vgray {
   --tw-text-opacity: 1;
   color: rgb(249 249 249 / var(--tw-text-opacity));
-}
-
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1335,6 +1335,40 @@ Ensure the default browser behavior of the `hidden` attribute.
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+.e-quick-popup-wrapper {
+  min-width: 0px !important;
+}
+
+@media (min-width: 640px) {
+  .e-quick-popup-wrapper {
+    min-width: 320px !important;
+  }
+}
+
+.e-dlg-header-content, .e-footer-content {
+  display: none !important;
+}
+
+.e-lib.e-dialog.e-control.e-schedule-dialog.e-dlg-modal.e-popup.e-popup-open {
+  min-height: 0px !important;
+  width: 320px !important;
+}
+
+.e-lib.e-dialog.e-control.e-device.e-schedule-dialog.e-dlg-modal.e-popup.e-popup-open {
+  height: auto !important;
+  max-height: 400px !important;
+  min-height: 0px !important;
+  width: 320px !important;
+  min-width: 0px !important;
+  border-radius: 0.375rem !important;
+}
+
+@media (min-width: 640px) {
+  .e-lib.e-dialog.e-control.e-device.e-schedule-dialog.e-dlg-modal.e-popup.e-popup-open {
+    min-width: 320px !important;
+  }
 }
 
 .after\:mt-1::after {
@@ -1547,13 +1581,18 @@ select {
     padding-bottom: 0px;
   }
 
-  .sm\:text-vmd {
-    font-size: 1.438rem;
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .sm\:text-lg {
     font-size: 1.125rem;
     line-height: 1.75rem;
+  }
+
+  .sm\:text-vmd {
+    font-size: 1.438rem;
   }
 
   .sm\:text-vlg {

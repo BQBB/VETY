@@ -35,3 +35,20 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
 }
+
+.e-quick-popup-wrapper {
+    @apply min-w-0 sm:min-w-[320px] !important;
+}
+
+.e-dlg-header-content,
+.e-footer-content {
+    @apply hidden !important;
+}
+
+.e-lib.e-dialog.e-control.e-schedule-dialog.e-dlg-modal.e-popup.e-popup-open {
+    @apply min-h-0 w-[320px] !important
+}
+
+.e-lib.e-dialog.e-control.e-device.e-schedule-dialog.e-dlg-modal.e-popup.e-popup-open {
+    @apply min-w-0 w-[320px] sm:min-w-[320px] h-auto min-h-0 max-h-[400px] rounded-md !important;
+}

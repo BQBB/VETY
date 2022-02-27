@@ -74,7 +74,7 @@ const Clinic = (props) => {
             res.data.appointment.map((appoint) => {
             appoints.push({
               Id: appoint.id,
-              Subject: appoint.member.user.first_name,
+              Subject: (appoint.member.user.first_name+" "+appoint.member.user.last_name).trim(),
               StartTime: new Date(appoint.start_date.split(":")[0] + ":00:00"),
               EndTime: new Date(appoint.end_date.split(":")[0] + ":00:00"),
               IsAllDay: false,
