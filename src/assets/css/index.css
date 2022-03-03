@@ -1510,10 +1510,6 @@ select {
     height: 15rem;
   }
 
-  .sm\:h-screen {
-    height: 100vh;
-  }
-
   .sm\:h-24 {
     height: 6rem;
   }
@@ -1773,11 +1769,6 @@ select {
   .md\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
-  }
-
-  .md\:px-0 {
-    padding-left: 0px;
-    padding-right: 0px;
   }
 
   .md\:text-right {

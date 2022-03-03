@@ -69,8 +69,8 @@ const Main = (props) => {
           <Loader />
         ) : (
           <>
-            <header className="pb-10 sm:pb-0 sm:h-screen bg-vgray md:overflow-hidden">
-              <Container bg="bg-vgray px-5 md:px-0">
+            <header className="pb-10 sm:pb-0 bg-vgray md:overflow-hidden">
+              <Container bg="bg-vgray">
                 <Grid>
                   <GridItem style="md:col-span-6 mt-10 md:mt-[60px] order-3 md:order-[0]">
                     <p className="font-air md:w-[77%] text-vmd md:text-vlg lg:text-[50px]">
